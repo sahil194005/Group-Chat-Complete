@@ -1,0 +1,9 @@
+#signupForm{
+    display: flex;
+    flex-direction: column;
+    border:2px solid black;
+    width:50%;
+    justify-content: center;
+    align-items: center;
+    /* height:30vh; */
+}
