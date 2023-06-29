@@ -3,18 +3,20 @@ require("dotenv").config();
 const userRoute = require("./routes/users");
 const sequelize = require("./db/connect");
 const bodyParser = require("body-parser");
-const cors = require('cors');
-
-
+const cors = require("cors");
 
 const app = express();
-app.use(express.json())
-app.use(cors());
+app.use(express.json());
+app.use(
+	cors({
+		origin:process.env.ORIGIN_IP,
+	})
+);
 app.use(userRoute);
 
 (async () => {
 	try {
-		await sequelize.sync()
+		await sequelize.sync();
 
 		app.listen(process.env.PORT, () => {
 			console.log(`server listening on port ${process.env.PORT}`);
@@ -22,4 +24,4 @@ app.use(userRoute);
 	} catch (error) {
 		console.log(error);
 	}
-})()
+})();
