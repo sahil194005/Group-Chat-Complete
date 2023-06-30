@@ -3,7 +3,7 @@ let chatDiv = document.querySelector('#chatDiv');
 
 let sendBtn = document.querySelector('#sendBtn');
 
-
+set
 
 function showMessageDiv(text) {
     let head2 = document.createElement("h2");
