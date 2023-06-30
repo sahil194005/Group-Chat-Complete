@@ -22,8 +22,12 @@ async function formSubmit(e) {
        
 		let response = await axios.post("http://localhost:3000/users/login", obj);
 		if (response) {
-			showMessageDiv(response.data.msg);
+			
+			localStorage.setItem('token',response.data.token);
+			window.location.href = '../chatPage/chat.html'
 		}
+		
+		
 	} catch (error) {
 		console.log(error);
 		showMessageDiv(error.response.data.msg);

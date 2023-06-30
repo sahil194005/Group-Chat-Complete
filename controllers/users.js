@@ -28,7 +28,7 @@ async function login(req, res, next) {
 		if (user) {
 			let comp = await bcrypt.compare(req.body.password, user.password);
 			if (comp) {
-				let token = generateAccessToken({ id: user.id });
+				let token = generateAccessToken({ userId: user.id,userName:user.name });
 				res.status(200).json({ msg: "user logged in successfully", token: token });
 			} else {
 				return res.status(401).json({ msg: "Unauthorised User" });
