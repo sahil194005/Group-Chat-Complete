@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    <link rel="stylesheet" href="signup.css">
-</head>
-<body>
-    <h1>Signup Page</h1>
-    <form id = "signupForm" action="submit" method="post">
-        <label for="nameInput">Name</label>
-        <input type="text" id = "nameInput" name = name required>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Signup</title>
+		<link rel="stylesheet" href="signup.css" />
+	</head>
+	<body>
+		<h1>Signup Page</h1>
+		<form id="signupForm" action="submit" method="post">
+			<label for="nameInput">Name</label>
+			<input type="text" id="nameInput" name="name" required />
 
-        
-        <label for="emailInput">Email</label>
-        <input type="email" id = "emailInput" name = email required>
+			<label for="emailInput">Email</label>
+			<input type="email" id="emailInput" name="email" required />
 
-        
-        <label for="phoneNoInput">Phone Number</label>
-        <input type="number" id = "phoneNoInput" name = phoneNo required>
+			<label for="phoneNoInput">Phone Number</label>
+			<input type="number" id="phoneNoInput" name="phoneNo" required />
 
-        
-        <label for="passwordInput">Password</label>
-        <input type="password" id = "passwordInput" name = password required>
+			<label for="passwordInput">Password</label>
+			<input type="password" id="passwordInput" name="password" required />
 
-        <button>Submit</button>
-
-        
-    </form>
-    <div id="messageDiv"></div>
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-    <script src="signup.js"></script>
-</body>
+			<button>Submit</button>
+		</form>
+        <a href="../login/login.html">Already have an account? Login here</a>
+		<div id="messageDiv"></div>
+		<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+		<script src="signup.js"></script>
+	</body>
 </html>
