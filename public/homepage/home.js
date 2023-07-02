@@ -221,8 +221,6 @@ async function add_msg_to_db(msg) {
 		let token = localStorage.getItem("token");
 		let groupId = localStorage.getItem("currentGroupId");
 		let response = await axios.post("http://localhost:3000/chat", { message: msg, groupId: groupId }, { headers: { authorization: token } });
-		
-
 		socket.emit("message", msg, response.data.data, groupId);
 	} catch (error) {
 		console.log(error);
