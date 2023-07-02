@@ -25,7 +25,7 @@ async function formSubmit(e) {
 		let response = await axios.post("http://localhost:3000/users/signup", obj);
 		if (response) {
 			showMessageDiv(response.data.msg);
-			// window.location.href = '../login/login.html'
+			window.location.href = '../login/login.html'
 		}
 	} catch (error) {
 		console.log(error);

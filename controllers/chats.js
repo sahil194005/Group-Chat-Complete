@@ -5,6 +5,7 @@ async function addMsg(req, res, next) {
 			message: req.body.message,
 			name: req.body.userName,
 			userId: req.body.userId,
+			groupId:req.body.groupId,
 		};
 		await Chat.create(obj);
 		res.status(200).json({ msg: "message sent" });
@@ -16,7 +17,8 @@ async function addMsg(req, res, next) {
 
 async function getPrevChat(req, res, next) {
 	try {
-		let chats = await Chat.findAll();
+		const {groupId} = req.params;
+		let chats = await Chat.findAll({where:{groupId:groupId}});;
 		res.status(201).json(chats);
 	} catch (error) {
 		console.log(error);

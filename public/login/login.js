@@ -24,7 +24,10 @@ async function formSubmit(e) {
 		if (response) {
 			
 			localStorage.setItem('token',response.data.token);
-			window.location.href = '../chatPage/chat.html'
+			if(localStorage.getItem('currentGroupId')){
+				localStorage.removeItem('currentGroupId')
+			}
+			window.location.href = '../homepage/home.html'
 		}
 		
 		

@@ -1,27 +1,35 @@
 const express = require("express");
+const app = express();
 require("dotenv").config();
 const userRoute = require("./routes/users");
-const userChats = require('./routes/chats');
+const chatsRoute = require("./routes/chats");
+const groupRoute = require("./routes/groups");
 const sequelize = require("./db/connect");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const User = require('./models/users');
-const chats = require('./models/chats');
+const User = require("./models/users");
+const chats = require("./models/chats");
+const Group = require('./models/group')
 
-const app = express();
 app.use(express.json());
 app.use(
 	cors({
-		origin:process.env.ORIGIN_IP,
+		origin: process.env.ORIGIN_IP,
 	})
 );
 
 User.hasMany(chats);
 chats.belongsTo(User);
 
+Group.belongsToMany(User,{through:'UserGroups'});
+User.belongsToMany(Group,{through:'UserGroups'});
+
+chats.belongsTo(Group);
+Group.hasMany(chats);
 
 app.use(userRoute);
-app.use(userChats);
+app.use(chatsRoute);
+app.use(groupRoute);
 
 (async () => {
 	try {

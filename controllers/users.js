@@ -28,7 +28,7 @@ async function login(req, res, next) {
 		if (user) {
 			let comp = await bcrypt.compare(req.body.password, user.password);
 			if (comp) {
-				let token = generateAccessToken({ userId: user.id,userName:user.name });
+				let token = generateAccessToken({ userId: user.id, userName: user.name });
 				res.status(200).json({ msg: "user logged in successfully", token: token });
 			} else {
 				return res.status(401).json({ msg: "Unauthorised User" });
@@ -42,4 +42,14 @@ async function login(req, res, next) {
 	}
 }
 
-module.exports = { signUp, login };
+async function getAllUsers(req, res, next) {
+	try {
+		let response = await User.findAll();
+
+		res.status(201).json(response);
+	} catch (error) {
+		console.log(error);
+		res.json({ msg: "cannot find users", err: error });
+	}
+}
+module.exports = { signUp, login, getAllUsers };

@@ -1,53 +1,59 @@
-window.addEventListener("DOMContentLoaded", (e) => {
-	loadChats();
-});
+// window.addEventListener("DOMContentLoaded", (e) => {
+// 	loadChats();
+// });
 let chatDiv = document.querySelector("#chatDiv");
 
-let sendBtn = document.querySelector("#sendBtn");
+// setInterval(() => {
+// 	loadChats();
+// }, 1000);
 
-setInterval(()=>{
-    loadChats()
-},1000);
+// function showMessageDiv(text) {
+// 	let head2 = document.createElement("h2");
+// 	head2.innerHTML = text;
+// 	document.querySelector("#messageDiv").appendChild(head2);
+// 	setTimeout(() => {
+// 		document.querySelector("#messageDiv").innerHTML = "";
+// 	}, 3000);
+// }
 
-function showMessageDiv(text) {
-	let head2 = document.createElement("h2");
-	head2.innerHTML = text;
-	document.querySelector("#messageDiv").appendChild(head2);
-	setTimeout(() => {
-		document.querySelector("#messageDiv").innerHTML = "";
-	}, 3000);
-}
+// function parseJwt(token) {
+// 	var base64Url = token.split(".")[1];
+// 	var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+// 	var jsonPayload = decodeURIComponent(
+// 		window
+// 			.atob(base64)
+// 			.split("")
+// 			.map(function (c) {
+// 				return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+// 			})
+// 			.join("")
+// 	);
 
-function parseJwt(token) {
-	var base64Url = token.split(".")[1];
-	var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-	var jsonPayload = decodeURIComponent(
-		window
-			.atob(base64)
-			.split("")
-			.map(function (c) {
-				return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-			})
-			.join("")
-	);
+// 	return JSON.parse(jsonPayload);
+// }
 
-	return JSON.parse(jsonPayload);
-}
+// let sendBtn = document.querySelector("#sendBtn");
+// sendBtn.addEventListener("click", sendMsg);
+// async function sendMsg(e) {
+// 	let msg = document.querySelector("#footer input").value;
+// 	document.querySelector("#footer input").value = "";
+// 	add_msg_to_db(msg);
+// }
 
-sendBtn.addEventListener("click", sendMsg);
-async function sendMsg(e) {
-	let msg = document.querySelector("#footer input").value;
-	document.querySelector("#footer input").value = "";
-
-	add_msg_to_db(msg);
-}
+// async function add_msg_to_db(msg) {
+// 	try {
+// 		let token = localStorage.getItem("token");
+// 		let response = await axios.post("http://localhost:3000/chat", { message: msg }, { headers: { authorization: token } });
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// }
 
 
 
 async function loadChats() {
 	try {
-		
-        let token = localStorage.getItem("token");
+		let token = localStorage.getItem("token");
 		let prevChats = await axios.get("http://localhost:3000/chat", { headers: { authorization: token } });
 		DisplayPrevChats(prevChats.data);
 	} catch (error) {
@@ -78,11 +84,4 @@ async function DisplayPrevChats(chats) {
 	}
 }
 
-async function add_msg_to_db(msg) {
-	try {
-		let token = localStorage.getItem("token");
-		let response = await axios.post("http://localhost:3000/chat", { message: msg }, { headers: { authorization: token } });
-	} catch (error) {
-		console.log(error);
-	}
-}
+
