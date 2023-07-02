@@ -8,7 +8,7 @@ async function addMsg(req, res, next) {
 			groupId:req.body.groupId,
 		};
 		await Chat.create(obj);
-		res.status(200).json({ msg: "message sent" });
+		res.status(200).json({ msg: "message sent" ,data:req.body.userName});
 	} catch (error) {
 		console.log(error);
 		res.status(404).json({ msg: "message not sent", err: error });

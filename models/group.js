@@ -13,7 +13,7 @@ const Group = sequelize.define("group", {
 	},
 	createdBy:{
 		type:DataTypes.INTEGER
-	}
+	} 
    
 });
 

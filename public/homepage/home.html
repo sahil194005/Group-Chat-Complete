@@ -4,10 +4,12 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Home</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+
 		<link rel="stylesheet" href="home.css" />
 	</head>
 	<body>
-    <div id="messageDiv"></div>
+		<div id="messageDiv"></div>
 		<button id="createGroupButton">form Your Tribe</button>
 		<div id="createGroupDiv"></div>
 		<div id="box">
@@ -16,13 +18,15 @@
 			<div id="chatContainer">
 				<div id="chatDiv">No Chats Here</div>
 
-				<div id="footer" style="visibility:hidden;">
+				<div id="footer" style="visibility: hidden">
 					<input type="text" for="SendBtn" />
 					<button id="sendBtn">Send</button>
 				</div>
 			</div>
 		</div>
 		<h2 id="pageHeader">Connect with friends, express yourself, and let your words create magic in the air. Welcome to a world where conversations come alive</h2>
+		<input type="text" id="messageInput" />
+		<button id="sendButton">Send</button>
 
 		<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 		<script src="home.js"></script>

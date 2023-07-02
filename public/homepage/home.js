@@ -1,3 +1,19 @@
+const socket = io("http://localhost:3000");
+
+
+socket.on("message", (msg, userName, groupId) => {
+	if (localStorage.getItem("currentGroupId")) {
+		let gId = localStorage.getItem("currentGroupId");
+		if (groupId == gId) {
+			let newpara = document.createElement("p");
+			newpara.innerText = `${userName}: ${msg}`;
+			document.querySelector("#chatDiv").appendChild(newpara);
+		}
+	}
+});
+
+
+
 window.addEventListener("DOMContentLoaded", (e) => {
 	displayGroupsLeft();
 	loadChats();
@@ -109,8 +125,6 @@ async function displayGroupsLeft() {
 	}
 }
 
-
-
 async function kickMembers(e) {
 	try {
 		e.preventDefault();
@@ -135,8 +149,8 @@ async function deleteGroup(e) {
 		e.preventDefault();
 		let groupid = e.target.parentElement.getAttribute("groupId");
 		let token = localStorage.getItem("token");
-		
-		let res = await axios.delete(`http://localhost:3000/groups/deleteGroup/${groupid}`, { headers: { authorization: token } }); 
+
+		let res = await axios.delete(`http://localhost:3000/groups/deleteGroup/${groupid}`, { headers: { authorization: token } });
 		showMessageDiv(res.data.msg);
 		displayGroupsLeft();
 	} catch (error) {
@@ -183,31 +197,33 @@ async function addMembers(e) {
 }
 
 // *********************************************Chat Side
-setInterval(() => {
-	loadChats();
-}, 1000);
- 
+
 
 async function groupChatPage(e) {
 	e.preventDefault();
-let groupId =e.target.parentElement.getAttribute('groupId');
-document.querySelector('#footer').style.visibility = 'visible';
-localStorage.setItem('currentGroupId',groupId);
+	let groupId = e.target.parentElement.getAttribute("groupId");
+	document.querySelector("#footer").style.visibility = "visible";
+	localStorage.setItem("currentGroupId", groupId);
+	loadChats();
 }
 
 let sendBtn = document.querySelector("#sendBtn");
 sendBtn.addEventListener("click", sendMsg);
+
 async function sendMsg(e) {
 	let msg = document.querySelector("#footer input").value;
 	document.querySelector("#footer input").value = "";
 	add_msg_to_db(msg);
 }
- 
+
 async function add_msg_to_db(msg) {
 	try {
 		let token = localStorage.getItem("token");
-		let groupId = localStorage.getItem('currentGroupId');
-		let response = await axios.post("http://localhost:3000/chat", { message: msg,groupId:groupId }, { headers: { authorization: token } });
+		let groupId = localStorage.getItem("currentGroupId");
+		let response = await axios.post("http://localhost:3000/chat", { message: msg, groupId: groupId }, { headers: { authorization: token } });
+		
+
+		socket.emit("message", msg, response.data.data, groupId);
 	} catch (error) {
 		console.log(error);
 	}
@@ -216,7 +232,7 @@ async function add_msg_to_db(msg) {
 async function loadChats() {
 	try {
 		let token = localStorage.getItem("token");
-		let groupId = localStorage.getItem('currentGroupId');
+		let groupId = localStorage.getItem("currentGroupId");
 		let prevChats = await axios.get(`http://localhost:3000/chat/${groupId}`, { headers: { authorization: token } });
 		DisplayPrevChats(prevChats.data);
 	} catch (error) {
@@ -229,7 +245,7 @@ async function DisplayPrevChats(chats) {
 	try {
 		let token = localStorage.getItem("token");
 		let curruser = parseJwt(token);
-		let chatDiv = document.querySelector('#chatDiv')
+		let chatDiv = document.querySelector("#chatDiv");
 		chatDiv.innerHTML = "";
 		for (let i = 0; i < chats.length; i++) {
 			let newpara = document.createElement("p");
