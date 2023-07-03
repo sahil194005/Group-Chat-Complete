@@ -235,24 +235,24 @@ async function sendMsg(e) {
 			let file = document.querySelector("#uploadBtn").files[0];
 			let formData = new FormData();
 			formData.append("file", file);
+			console.log('before')
+
+
+
 			let response = await axios.post(`http://localhost:3000/upload/${groupId}`, formData, { headers: { authorization: token }, "Content-Type": "multipart/form-data" });
-			socket.emit("file", response.data.data, response.data.username, groupId);
+			
+			
+			
+			console.log('after');
+			// socket.emit("file", response.data.data, response.data.username, groupId);
 		} else {
 			let msg = document.querySelector("#inputText").value;
 			document.querySelector("#inputText").value = "";
-			add_msg_to_db(msg);
+			let token = localStorage.getItem("token");
+			let groupId = localStorage.getItem("currentGroupId");
+			let response = await axios.post("http://localhost:3000/chat", { message: msg, groupId: groupId }, { headers: { authorization: token } });
+			socket.emit("message", msg, response.data.data, groupId);
 		}
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-async function add_msg_to_db(msg) {
-	try {
-		let token = localStorage.getItem("token");
-		let groupId = localStorage.getItem("currentGroupId");
-		let response = await axios.post("http://localhost:3000/chat", { message: msg, groupId: groupId }, { headers: { authorization: token } });
-		socket.emit("message", msg, response.data.data, groupId);
 	} catch (error) {
 		console.log(error);
 	}

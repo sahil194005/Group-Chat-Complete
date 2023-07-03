@@ -45,7 +45,7 @@ async function uploadFile(req, res, next) {
 			type:'file'
 		});
 
-		res.status(200).json({ data: fileURL, username: userName });
+		res.status(200).send({ data: fileURL, username: userName });
 	} catch (error) {
 		console.log(error);
 		res.status(404).json({ msg: "error uploading file", err: error });
