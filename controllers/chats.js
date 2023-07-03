@@ -1,8 +1,6 @@
 const Chat = require("../models/chats");
-const multer = require("multer");
 const AWS = require("aws-sdk");
 const fs = require("fs");
-const upload = multer({ dest: "uploads/" }).single("file");
 
 async function addMsg(req, res, next) {
 	try {
@@ -11,6 +9,7 @@ async function addMsg(req, res, next) {
 			name: req.body.userName,
 			userId: req.body.userId,
 			groupId: req.body.groupId,
+			type:'text'
 		};
 		await Chat.create(obj);
 		res.status(200).json({ msg: "message sent", data: req.body.userName });
@@ -43,10 +42,10 @@ async function uploadFile(req, res, next) {
 			userId: userId,
 			message: fileURL,
 			name: userName,
+			type:'file'
 		});
 
-		// res.status(200).json({ data: fileURL, username: userName });
-		res.status(200).json('hii');
+		res.status(200).json({ data: fileURL, username: userName });
 	} catch (error) {
 		console.log(error);
 		res.status(404).json({ msg: "error uploading file", err: error });

@@ -8,6 +8,10 @@ io.on("connection", (socket) => {
 	socket.on("message", (msg, userName, groupId) => {
 		io.emit("message", msg, userName, groupId);
 	});
+
+	socket.on("file", (msg, userName, groupId) => {
+		io.emit("file", msg, userName, groupId);
+	});
 });
 
 const userRoute = require("./routes/users");
@@ -40,7 +44,7 @@ app.use(groupRoute);
 
 (async () => {
 	try {
-		await sequelize.sync();
+		await sequelize.sync(); 
 
 		http.listen(process.env.PORT, () => {
 			console.log(`server listening on port ${process.env.PORT}`);
