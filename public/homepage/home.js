@@ -1,6 +1,5 @@
 const socket = io("http://localhost:3000");
 
-
 socket.on("message", (msg, userName, groupId) => {
 	if (localStorage.getItem("currentGroupId")) {
 		let gId = localStorage.getItem("currentGroupId");
@@ -11,8 +10,6 @@ socket.on("message", (msg, userName, groupId) => {
 		}
 	}
 });
-
-
 
 window.addEventListener("DOMContentLoaded", (e) => {
 	displayGroupsLeft();
@@ -198,22 +195,38 @@ async function addMembers(e) {
 
 // *********************************************Chat Side
 
-
 async function groupChatPage(e) {
 	e.preventDefault();
 	let groupId = e.target.parentElement.getAttribute("groupId");
 	document.querySelector("#footer").style.visibility = "visible";
+	document.querySelector("#chatDiv").style.visibility = "visible";
 	localStorage.setItem("currentGroupId", groupId);
 	loadChats();
 }
 
-let sendBtn = document.querySelector("#sendBtn");
-sendBtn.addEventListener("click", sendMsg);
+document.querySelector("#sendBtn").addEventListener("click", sendMsg);
 
 async function sendMsg(e) {
-	let msg = document.querySelector("#footer input").value;
-	document.querySelector("#footer input").value = "";
-	add_msg_to_db(msg);
+	try {
+		e.preventDefault();
+		
+		if (document.querySelector("#uploadBtn").files[0]) {
+			let token = localStorage.getItem("token");
+			let groupId = localStorage.getItem("currentGroupId");
+			let file = document.querySelector("#uploadBtn").files[0];
+			let formData = new FormData();
+			formData.append("file", file);
+			let response = await axios.post(`http://localhost:3000/upload/${groupId}`, formData, { headers: { authorization: token }, "Content-Type": "multipart/form-data" });
+			console.log(response);
+			// console.log(response.data);
+		}
+		else{
+		let msg = document.querySelector("#inputText").value;
+		document.querySelector("#inputText").value = "";
+		add_msg_to_db(msg);}
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function add_msg_to_db(msg) {

@@ -16,18 +16,17 @@
 			<div id="groupsListContainer">The groups will be dynamically added here</div>
 
 			<div id="chatContainer">
-				<div id="chatDiv">No Chats Here</div>
-
-				<div id="footer" style="visibility: hidden">
-					<input type="text" for="SendBtn" />
+				<div id="chatDiv" style="visibility: hidden;">No Chats Here</div>
+				<form id="footer" style="visibility: hidden"  enctype="multipart/form-data" >
+					<input type="text" id="inputText"/>
+					<input type="file" name="file" id="uploadBtn">
 					<button id="sendBtn">Send</button>
-				</div>
+					<!-- <button id="uploadBtn">Attach</button> -->
+				</form>
 			</div>
 		</div>
 		<h2 id="pageHeader">Connect with friends, express yourself, and let your words create magic in the air. Welcome to a world where conversations come alive</h2>
-		<input type="text" id="messageInput" />
-		<button id="sendButton">Send</button>
-
+		
 		<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 		<script src="home.js"></script>
 	</body>
